@@ -107,27 +107,124 @@
     window.addEventListener("scroll", function () { if (on) hide(); }, { passive: true });
   }
 
-  /* ---------- Mascot looks toward the pointer ---------- */
-  var mascot = document.querySelector(".mascot svg");
-  var calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (mascot && !calm && window.matchMedia("(pointer: fine)").matches) {
-    var pending = 0, mx = 0, my = 0;
-    var look = function () {
-      pending = 0;
-      var r = mascot.getBoundingClientRect();
-      if (r.bottom < 0) return;
-      var nx = Math.max(-1, Math.min(1, (mx - (r.left + r.width / 2)) / (window.innerWidth / 2)));
-      var ny = Math.max(-1, Math.min(1, (my - (r.top + r.height * 0.5)) / (window.innerHeight / 2)));
-      mascot.style.setProperty("--tilt", (nx * 4).toFixed(2) + "deg");
-      mascot.style.setProperty("--hx", (nx * 3).toFixed(1) + "px");
-      mascot.style.setProperty("--px", (nx * 3.5).toFixed(1) + "px");
-      mascot.style.setProperty("--py", (ny * 2.5).toFixed(1) + "px");
-    };
-    window.addEventListener("mousemove", function (e) {
-      mx = e.clientX; my = e.clientY;
-      if (!pending) pending = requestAnimationFrame(look);
+  /* ---------- Bit, the tiny robot ---------- */
+  (function () {
+    var still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var wrap = document.createElement("div");
+    wrap.className = "bot";
+    wrap.innerHTML =
+      '<span class="bot-say" role="status" aria-live="polite"></span>' +
+      '<span class="bot-z" aria-hidden="true">z</span><span class="bot-z" aria-hidden="true">z</span>' +
+      '<button class="bot-btn" type="button" aria-label="Say hi to Bit, the robot">' +
+        '<svg viewBox="0 0 64 74" aria-hidden="true">' +
+          '<g class="b-body">' +
+            '<line x1="32" y1="8" x2="32" y2="17" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>' +
+            '<circle class="b-light" cx="32" cy="6" r="4.2"/>' +
+            '<rect x="5" y="29" width="5" height="11" rx="2.5" fill="currentColor"/>' +
+            '<rect x="54" y="29" width="5" height="11" rx="2.5" fill="currentColor"/>' +
+            '<rect x="9" y="16" width="46" height="36" rx="13" fill="currentColor"/>' +
+            '<rect class="b-plate" x="15" y="22" width="34" height="23" rx="8.5"/>' +
+            '<g class="b-eyes">' +
+              '<rect class="b-eye" x="22.5" y="28.5" width="5.5" height="9" rx="2.75" fill="currentColor"/>' +
+              '<rect class="b-eye" x="36" y="28.5" width="5.5" height="9" rx="2.75" fill="currentColor"/>' +
+            '</g>' +
+            '<path class="b-mouth" d="M28.5 40.5 Q32 43.5 35.5 40.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>' +
+            '<rect class="b-arm b-arm--l" x="12" y="55" width="6" height="12" rx="3" fill="currentColor"/>' +
+            '<rect class="b-arm b-arm--r" x="46" y="55" width="6" height="12" rx="3" fill="currentColor"/>' +
+            '<rect x="20" y="54" width="24" height="16" rx="7" fill="currentColor"/>' +
+            '<rect class="b-plate" x="27" y="59" width="10" height="3" rx="1.5"/>' +
+          '</g>' +
+        '</svg>' +
+      '</button>';
+    document.body.appendChild(wrap);
+
+    var btn = wrap.querySelector(".bot-btn");
+    var say = wrap.querySelector(".bot-say");
+    var lines = [
+      "Hi. I'm Bit, the intern.",
+      "Ali is shipping something. Again.",
+      "Try the moon button up top.",
+      "I run on coffee and TypeScript.",
+      "Built in Dhaka. Rendered everywhere.",
+      "This page is lighter than your selfie.",
+      "Click me less. I'm working.",
+      "Hire Ali. I need a raise."
+    ];
+    var n = 0, sayTimer = 0, hopTimer = 0;
+
+    function talk(text, ms) {
+      say.textContent = text;
+      say.classList.add("is-on");
+      clearTimeout(sayTimer);
+      sayTimer = setTimeout(function () { say.classList.remove("is-on"); }, ms || 2800);
+    }
+    function hop() {
+      if (still) return;
+      wrap.classList.remove("is-hop");
+      void wrap.offsetWidth;
+      wrap.classList.add("is-hop");
+      clearTimeout(hopTimer);
+      hopTimer = setTimeout(function () { wrap.classList.remove("is-hop"); }, 650);
+    }
+
+    btn.addEventListener("click", function () {
+      wake();
+      hop();
+      talk(lines[n % lines.length]);
+      n++;
+    });
+
+    /* Reacts to the theme toggle */
+    var tgl = document.querySelector(".theme-toggle");
+    if (tgl) tgl.addEventListener("click", function () {
+      wake();
+      talk(root.getAttribute("data-theme") === "dark" ? "Lights off. Nice." : "Lights on. My eyes.", 2200);
+    });
+
+    /* Says hi once per visit */
+    var seen = false;
+    try { seen = sessionStorage.getItem("bit-hi") === "1"; sessionStorage.setItem("bit-hi", "1"); } catch (e) {}
+    if (!seen) setTimeout(function () { hop(); talk(lines[0], 3200); n = 1; }, 2400);
+
+    /* Notices when you reach the end */
+    var ended = false;
+    window.addEventListener("scroll", function () {
+      if (ended) return;
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+        ended = true;
+        talk("You made it to the end. Say hi?", 3200);
+      }
     }, { passive: true });
-  }
+
+    /* Eyes follow the pointer */
+    if (window.matchMedia("(pointer: fine)").matches) {
+      var raf = 0, px = 0, py = 0;
+      window.addEventListener("mousemove", function (e) {
+        px = e.clientX; py = e.clientY;
+        if (raf) return;
+        raf = requestAnimationFrame(function () {
+          raf = 0;
+          var r = btn.getBoundingClientRect();
+          var dx = px - (r.left + r.width / 2), dy = py - (r.top + r.height * 0.4);
+          var d = Math.max(1, Math.hypot(dx, dy));
+          wrap.style.setProperty("--ex", (dx / d * 3).toFixed(2) + "px");
+          wrap.style.setProperty("--ey", (dy / d * 2.2).toFixed(2) + "px");
+        });
+      }, { passive: true });
+    }
+
+    /* Dozes off when left alone */
+    var idle = 0;
+    function wake() {
+      wrap.classList.remove("is-asleep");
+      clearTimeout(idle);
+      idle = setTimeout(function () { wrap.classList.add("is-asleep"); }, 25000);
+    }
+    ["mousemove", "keydown", "scroll", "touchstart"].forEach(function (ev) {
+      window.addEventListener(ev, wake, { passive: true });
+    });
+    wake();
+  })();
 
   /* ---------- Copy email ---------- */
   var copy = document.querySelector("[data-copy]");
