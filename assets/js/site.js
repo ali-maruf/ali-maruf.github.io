@@ -107,6 +107,28 @@
     window.addEventListener("scroll", function () { if (on) hide(); }, { passive: true });
   }
 
+  /* ---------- Mascot looks toward the pointer ---------- */
+  var mascot = document.querySelector(".mascot svg");
+  var calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (mascot && !calm && window.matchMedia("(pointer: fine)").matches) {
+    var pending = 0, mx = 0, my = 0;
+    var look = function () {
+      pending = 0;
+      var r = mascot.getBoundingClientRect();
+      if (r.bottom < 0) return;
+      var nx = Math.max(-1, Math.min(1, (mx - (r.left + r.width / 2)) / (window.innerWidth / 2)));
+      var ny = Math.max(-1, Math.min(1, (my - (r.top + r.height * 0.5)) / (window.innerHeight / 2)));
+      mascot.style.setProperty("--tilt", (nx * 4).toFixed(2) + "deg");
+      mascot.style.setProperty("--hx", (nx * 3).toFixed(1) + "px");
+      mascot.style.setProperty("--px", (nx * 3.5).toFixed(1) + "px");
+      mascot.style.setProperty("--py", (ny * 2.5).toFixed(1) + "px");
+    };
+    window.addEventListener("mousemove", function (e) {
+      mx = e.clientX; my = e.clientY;
+      if (!pending) pending = requestAnimationFrame(look);
+    }, { passive: true });
+  }
+
   /* ---------- Copy email ---------- */
   var copy = document.querySelector("[data-copy]");
   if (copy) {

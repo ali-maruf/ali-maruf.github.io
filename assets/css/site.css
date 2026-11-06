@@ -259,15 +259,77 @@ a { color: inherit; text-decoration: none; }
 .hero {
   min-height: 100vh;
   min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-content: end;
+  column-gap: clamp(1.5rem, 4vw, 4rem);
   padding-bottom: clamp(4rem, 16vh, 10rem);
+}
+.hero h1 { grid-column: 1; grid-row: 1; align-self: end; }
+.hero-meta { grid-column: 1; grid-row: 2; }
+
+/* Mascot */
+.mascot {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  align-self: end;
+  width: clamp(220px, 27vw, 400px);
+  margin-bottom: -0.5rem;
+}
+.mascot svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  animation: breathe 6s ease-in-out infinite;
+}
+.m-head {
+  transform-box: view-box;
+  transform-origin: 200px 330px;
+  transform: translateX(var(--hx, 0px)) rotate(var(--tilt, 0deg));
+  transition: transform 700ms var(--ease);
+}
+.m-pupil {
+  transform: translate(var(--px, 0px), var(--py, 0px));
+  transition: transform 400ms var(--ease);
+}
+.m-eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blink 5.5s infinite;
+}
+:root[data-theme="dark"] .m-hair { filter: drop-shadow(0 -1px 1.5px rgba(255, 255, 255, 0.22)); }
+@keyframes breathe {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes blink {
+  0%, 93%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.08); }
+}
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; grid-template-rows: auto auto auto; }
+  .mascot {
+    grid-column: 1;
+    grid-row: 1;
+    width: clamp(180px, 46vw, 260px);
+    margin: 0 0 1.5rem -0.5rem;
+  }
+  .hero { padding-top: 6.5rem; }
+  .hero h1 { grid-row: 2; }
+  .hero-meta { grid-row: 3; }
+}
+
+@media (max-width: 380px) {
+  .nav { padding-left: 1rem; gap: 0.25rem; }
+  .nav ul a { padding-inline: 0.5rem; }
 }
 
 .hero h1 {
   font-family: var(--font-display);
-  font-size: var(--step-hero);
+  font-size: clamp(3rem, 7.6vw, 7.5rem);
   font-weight: 600;
   letter-spacing: -0.045em;
   line-height: 0.98;
