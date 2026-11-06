@@ -274,7 +274,7 @@ a { color: inherit; text-decoration: none; }
   grid-column: 2;
   grid-row: 1 / 3;
   align-self: end;
-  width: clamp(220px, 27vw, 400px);
+  width: clamp(210px, 24vw, 360px);
   margin-bottom: -0.5rem;
 }
 .mascot svg {
@@ -286,7 +286,7 @@ a { color: inherit; text-decoration: none; }
 }
 .m-head {
   transform-box: view-box;
-  transform-origin: 200px 330px;
+  transform-origin: 200px 360px;
   transform: translateX(var(--hx, 0px)) rotate(var(--tilt, 0deg));
   transition: transform 700ms var(--ease);
 }
@@ -314,7 +314,7 @@ a { color: inherit; text-decoration: none; }
   .mascot {
     grid-column: 1;
     grid-row: 1;
-    width: clamp(180px, 46vw, 260px);
+    width: clamp(170px, 44vw, 240px);
     margin: 0 0 1.5rem -0.5rem;
   }
   .hero { padding-top: 6.5rem; }
