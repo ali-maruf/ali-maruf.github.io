@@ -231,21 +231,71 @@
     b.addEventListener("click", function () { window.print(); });
   });
 
-  /* ---------- Dhaka clock (contact page) ---------- */
-  var clock = document.querySelector("[data-dhaka-time]");
-  if (clock && window.Intl) {
+  /* ---------- Dhaka clock (contact page, footer, menu) ---------- */
+  var clocks = document.querySelectorAll("[data-dhaka-time]");
+  if (clocks.length && window.Intl) {
     var fmt = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Dhaka", hour: "numeric", minute: "2-digit" });
     var hourFmt = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Dhaka", hour: "numeric", hour12: false });
     var status = document.querySelector("[data-dhaka-status]");
     var tick = function () {
       var now = new Date();
-      clock.textContent = fmt.format(now).toLowerCase();
+      var txt = fmt.format(now).toLowerCase();
+      clocks.forEach(function (el) { el.textContent = txt; });
       var h = parseInt(hourFmt.format(now), 10) % 24;
       if (status) status.textContent = h >= 8 && h < 24 ? "probably at the desk" : "probably asleep, replies in the morning";
     };
     tick();
     setInterval(tick, 30000);
   }
+
+  /* ---------- Mobile menu ---------- */
+  var menuBtn = document.querySelector(".nav-menu");
+  var menu = document.getElementById("menu");
+  if (menuBtn && menu && nav) {
+    var setMenu = function (open) {
+      nav.classList.toggle("is-open", open);
+      menu.classList.toggle("is-open", open);
+      menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+      menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    };
+    menuBtn.addEventListener("click", function () { setMenu(!menu.classList.contains("is-open")); });
+    menu.addEventListener("click", function (e) { if (e.target.closest("a")) setMenu(false); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && menu.classList.contains("is-open")) { setMenu(false); menuBtn.focus(); }
+    });
+    document.addEventListener("click", function (e) {
+      if (menu.classList.contains("is-open") && !menu.contains(e.target) && !menuBtn.contains(e.target)) setMenu(false);
+    });
+    window.matchMedia("(min-width: 761px)").addEventListener("change", function (e) { if (e.matches) setMenu(false); });
+  }
+
+  /* ---------- Active section in the header (home page) ---------- */
+  var spies = document.querySelectorAll("[data-spy]");
+  if (spies.length && "IntersectionObserver" in window) {
+    var mark = function (id) {
+      spies.forEach(function (a) { a.classList.toggle("is-active", a.getAttribute("data-spy") === id); });
+    };
+    var spyIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) mark(en.target.id); });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    ["work", "about"].forEach(function (id) {
+      var sec = document.getElementById(id);
+      if (sec) spyIO.observe(sec);
+    });
+    var hero = document.querySelector(".hero"), contactSec = document.getElementById("contact");
+    [hero, contactSec].forEach(function (el) {
+      if (!el) return;
+      new IntersectionObserver(function (en) { if (en[0].isIntersecting) mark(null); }, { rootMargin: "-45% 0px -50% 0px" }).observe(el);
+    });
+  }
+
+  /* ---------- Back to top ---------- */
+  document.querySelectorAll("[data-top]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var calmTop = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, behavior: calmTop ? "auto" : "smooth" });
+    });
+  });
 
   /* ---------- Copy email ---------- */
   var copy = document.querySelector("[data-copy]");
