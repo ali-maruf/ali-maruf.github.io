@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Atlas — Ali Maruf</title>
+  <meta name="description" content="A calm, monochrome personal life OS. The moment you open it, it answers four questions: what&#x27;s today, what can&#x27;t slip, where am I, and where am I going.">
+  <meta name="theme-color" content="#fafaf7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://ali-maruf.github.io/work/atlas/">
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Atlas — Ali Maruf">
+  <meta property="og:description" content="A calm, monochrome personal life OS. The moment you open it, it answers four questions: what&#x27;s today, what can&#x27;t slip, where am I, and where am I going.">
+  <meta property="og:url" content="https://ali-maruf.github.io/work/atlas/">
+  <meta property="og:image" content="https://ali-maruf.github.io/assets/img/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <script>
+    (function () {
+      var d = document.documentElement, t = null;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      d.setAttribute("data-theme", t || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+      d.classList.add("js");
+    })();
+  </script>
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav glass">
+    <a class="wordmark" href="/" aria-label="Ali Maruf, home">Ali Maruf<span class="dot">.</span></a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="/#work">Work</a></li>
+        <li><a href="/#systems">Systems</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Toggle colour theme">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
+    </button>
+  </header>
+
+  <main id="main">
+    <section class="case-hero wrap">
+      <span class="mono reveal">2026 — Live</span>
+      <h1 class="reveal">Atlas<span class="dot">.</span></h1>
+      <p class="lede reveal" style="--delay:80ms">A calm, monochrome personal life OS. The moment you open it, it answers four questions: what&#x27;s today, what can&#x27;t slip, where am I, and where am I going.</p>
+      <div class="reveal" style="--delay:140ms"><a class="live link mono" href="https://atlas-life-os-rho.vercel.app" target="_blank" rel="noopener">Visit atlas-life-os-rho.vercel.app ↗</a></div>
+    </section>
+
+    <div class="wrap reveal">
+      <!-- Replace with: <img src="/assets/img/atlas.webp" width="1920" height="1080" alt="Atlas screenshot" decoding="async"> -->
+      <div class="shot shot--wide" style="--tint:hsl(220 8% 50% / .18)" data-label="Atlas"></div>
+    </div>
+
+    <div class="section wrap case-body">
+      <section class="case-block reveal">
+        <h2>Problem</h2>
+        <div><p>Tasks, classes, goals, notes and people usually live in five different apps.</p><p>None of them tells you, at a glance, what actually matters today.</p></div>
+      </section>
+      <section class="case-block reveal">
+        <h2>What I built</h2>
+        <ul><li>Today view with a Top 3, a timeline, quick capture, and a &quot;don&#x27;t let slip&quot; list.</li><li>Natural-language inbox, tasks on lists and boards, and a calendar where you drag tasks into time blocks.</li><li>Studies, projects, people and goals in one place, with a guided weekly review on Sundays.</li><li>A block editor for notes, Excalidraw whiteboards, a ⌘K palette, and keyboard shortcuts everywhere.</li><li>Installable PWA. It runs entirely on free tiers.</li></ul>
+      </section>
+      <!-- Result: add only real numbers (users, revenue, orders). Leave this out until you have them.
+      <section class="case-block reveal">
+        <h2>Result</h2>
+        <p>…</p>
+      </section>
+      -->
+      <section class="case-block reveal">
+        <h2>Stack</h2>
+        <p class="mono">Next.js 16 · TypeScript · Tailwind v4 · Supabase · Tiptap · Excalidraw · dnd-kit</p>
+      </section>
+    </div>
+
+    <a class="next wrap" href="/work/digibikri/">
+      <span class="mono">Next project</span>
+      <strong>DigiBikri<span class="dot">.</span> →</strong>
+    </a>
+  </main>
+
+  <footer class="footer wrap">
+    <p class="mono">Ali Maruf<span class="dot">.</span> — Dhaka — 2026</p>
+  </footer>
+</body>
+</html>
