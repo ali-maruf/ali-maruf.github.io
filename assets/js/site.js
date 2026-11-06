@@ -226,6 +226,27 @@
     wake();
   })();
 
+  /* ---------- Print CV ---------- */
+  document.querySelectorAll("[data-print]").forEach(function (b) {
+    b.addEventListener("click", function () { window.print(); });
+  });
+
+  /* ---------- Dhaka clock (contact page) ---------- */
+  var clock = document.querySelector("[data-dhaka-time]");
+  if (clock && window.Intl) {
+    var fmt = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Dhaka", hour: "numeric", minute: "2-digit" });
+    var hourFmt = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Dhaka", hour: "numeric", hour12: false });
+    var status = document.querySelector("[data-dhaka-status]");
+    var tick = function () {
+      var now = new Date();
+      clock.textContent = fmt.format(now).toLowerCase();
+      var h = parseInt(hourFmt.format(now), 10) % 24;
+      if (status) status.textContent = h >= 8 && h < 24 ? "probably at the desk" : "probably asleep, replies in the morning";
+    };
+    tick();
+    setInterval(tick, 30000);
+  }
+
   /* ---------- Copy email ---------- */
   var copy = document.querySelector("[data-copy]");
   if (copy) {

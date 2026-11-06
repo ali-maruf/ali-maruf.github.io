@@ -28,8 +28,8 @@
       d.classList.add("js");
     })();
   </script>
-  <link rel="stylesheet" href="/assets/css/site.css?v=4">
-  <script src="/assets/js/site.js?v=4" defer></script>
+  <link rel="stylesheet" href="/assets/css/site.css?v=5">
+  <script src="/assets/js/site.js?v=5" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -38,10 +38,10 @@
     <a class="wordmark" href="/" aria-label="Ali Maruf, home">Ali Maruf<span class="dot">.</span></a>
     <nav aria-label="Primary">
       <ul>
-        <li><a href="#work">Work</a></li>
-        <li><a href="#systems">Systems</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="/#work">Work</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/cv/">CV</a></li>
+        <li><a href="/contact/">Contact</a></li>
       </ul>
     </nav>
     <button class="theme-toggle" type="button" aria-label="Toggle colour theme">
@@ -199,10 +199,12 @@
           <p>I've been in business since 2020. Before any of this I made millions of Robux on Roblox, which taught me early that people pay for things they enjoy.</p>
           <p>Now I'm building startups for Bangladesh and sites for businesses abroad. I use AI to move fast, but I make the decisions myself.</p>
           <p class="mono">TypeScript · React · Next.js · Three.js · GSAP · PHP · MySQL · Supabase · Node · Figma · Premiere Pro · After Effects</p>
+          <p class="about-links"><a class="link" href="/cv/">Read the CV →</a></p>
         </div>
         <figure class="reveal" style="--delay:120ms">
-          <!-- Replace with: <img src="/assets/img/portrait.webp" width="960" height="1200" alt="Ali Maruf" loading="lazy" decoding="async"> -->
-          <div class="shot shot--portrait" data-label="Portrait"></div>
+          <div class="shot shot--portrait">
+            <img src="/assets/img/portrait.webp" srcset="/assets/img/portrait-480.webp 480w, /assets/img/portrait.webp 960w" sizes="(max-width: 860px) 90vw, 24rem" width="960" height="1200" alt="Ali Maruf taking a mirror selfie in glasses and a Brazil jersey" loading="lazy" decoding="async">
+          </div>
         </figure>
       </div>
     </section>
@@ -216,6 +218,7 @@
           <button class="pill" type="button" data-copy="mohammadalimaruf0@gmail.com">Copy</button>
         </div>
         <div class="socials mono">
+          <a href="/contact/">All the ways →</a>
           <a href="https://github.com/ali-maruf" target="_blank" rel="noopener">GitHub</a>
           <!-- TODO: uncomment and fill in
           <a href="https://www.linkedin.com/in/YOUR-HANDLE" target="_blank" rel="noopener">LinkedIn</a>
