@@ -28,8 +28,8 @@
       d.classList.add("js");
     })();
   </script>
-  <link rel="stylesheet" href="/assets/css/site.css?v=6">
-  <script src="/assets/js/site.js?v=6" defer></script>
+  <link rel="stylesheet" href="/assets/css/site.css?v=10">
+  <script src="/assets/js/site.js?v=10" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -71,8 +71,21 @@
   <main id="main">
 
     <!-- Hero -->
-    <section class="hero wrap" aria-label="Introduction">
-      <h1 class="reveal">I build products, the systems behind them, and then sell them<span class="dot">.</span></h1>
+    <section id="top" class="hero wrap" aria-label="Introduction">
+      <div class="orbit" aria-hidden="true">
+        <svg viewBox="0 0 400 400">
+          <circle class="o-ring" pathLength="1" cx="200" cy="200" r="190"/>
+          <circle class="o-ring" pathLength="1" cx="200" cy="200" r="128"/>
+          <circle class="o-ring" pathLength="1" cx="200" cy="200" r="66"/>
+          <g class="o-fade">
+            <g class="o-spin"><circle class="o-dot" cx="200" cy="10" r="8"/></g>
+            <g class="o-spin o-spin--b"><circle class="o-sat" cx="328" cy="200" r="4"/></g>
+            <g class="o-spin o-spin--c"><circle class="o-sat" cx="200" cy="266" r="3"/></g>
+            <circle class="o-sat" cx="200" cy="200" r="2.5"/>
+          </g>
+        </svg>
+      </div>
+      <h1 class="words" data-words>I build products, the systems behind them, and then sell them<span class="dot">.</span></h1>
       <div class="hero-meta reveal" style="--delay:120ms">
         <p class="mono status">Currently shipping — <a class="link" href="/work/auteur/">Auteur</a></p>
         <p class="mono">Founder · Product engineer · Dhaka</p>
@@ -81,7 +94,7 @@
 
     <!-- Startups -->
     <section id="work" class="section wrap" aria-labelledby="work-title">
-      <h2 id="work-title" class="h-section reveal">Work<span class="dot">.</span></h2>
+      <h2 id="work-title" class="h-section reveal" data-n="01">Work<span class="dot">.</span></h2>
 
       <ul class="work-list">
         <li class="reveal">
@@ -128,9 +141,9 @@
     </section>
 
     <!-- Client work -->
-    <section class="section wrap" aria-labelledby="clients-title">
+    <section id="clients" class="section wrap" aria-labelledby="clients-title">
       <div class="clients-head reveal">
-        <h2 id="clients-title" class="h-section">Client work<span class="dot">.</span></h2>
+        <h2 id="clients-title" class="h-section" data-n="02">Client work<span class="dot">.</span></h2>
         <p class="muted">Scroll-driven 3D websites for real businesses, mostly in Sydney.</p>
       </div>
 
@@ -180,29 +193,38 @@
         <a class="reveal" style="--delay:80ms" href="https://tomi-watch.vercel.app" target="_blank" rel="noopener">
           <figure>
             <div class="shot" style="--tint:hsl(240 10% 45% / .16)"><img src="/assets/img/work/tomi.webp" srcset="/assets/img/work/tomi-800.webp 800w, /assets/img/work/tomi.webp 1600w" sizes="(max-width: 720px) 100vw, 50vw" width="1600" height="1000" alt="Tomi Watch website" loading="lazy" decoding="async"></div>
-            <figcaption><strong>Tomi Watch</strong><span class="mono">Product site</span></figcaption>
+            <figcaption><strong>Tomi Watch</strong><span class="mono">Storefront + admin</span></figcaption>
           </figure>
         </a>
       </div>
     </section>
 
+    <!-- Ticker -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track"><span>Product</span><i></i><span>Systems</span><i></i><span>Video</span><i></i><span>Selling</span><i></i><span>SaaS</span><i></i><span>Automation</span><i></i><span>Product</span><i></i><span>Systems</span><i></i><span>Video</span><i></i><span>Selling</span><i></i><span>SaaS</span><i></i><span>Automation</span><i></i></div>
+    </div>
+
     <!-- Systems -->
     <section id="systems" class="section wrap" aria-labelledby="systems-title">
-      <h2 id="systems-title" class="h-section reveal">Systems<span class="dot">.</span></h2>
+      <h2 id="systems-title" class="h-section reveal" data-n="03">Systems<span class="dot">.</span></h2>
       <ul class="systems">
         <li class="reveal">
+          <svg class="ico" aria-hidden="true"><use href="/assets/img/icons.svg#i-product"/></svg>
           <h3>Product</h3>
           <p>I take an idea from a blank page to SaaS that people pay for. I scope it, design it, build it and ship it.</p>
         </li>
         <li class="reveal" style="--delay:80ms">
+          <svg class="ico" aria-hidden="true"><use href="/assets/img/icons.svg#i-systems"/></svg>
           <h3>Systems</h3>
           <p>I design the architecture, data flows and automations that let a small team work like a big one.</p>
         </li>
         <li class="reveal" style="--delay:160ms">
+          <svg class="ico" aria-hidden="true"><use href="/assets/img/icons.svg#i-video"/></svg>
           <h3>Video</h3>
           <p>I edit video and motion that sells the product, in Premiere Pro and After Effects.</p>
         </li>
         <li class="reveal" style="--delay:240ms">
+          <svg class="ico" aria-hidden="true"><use href="/assets/img/icons.svg#i-sell"/></svg>
           <h3>Selling</h3>
           <p>I've been selling since 2020. To me, a product isn't finished until someone pays for it.</p>
         </li>
@@ -211,7 +233,7 @@
 
     <!-- About -->
     <section id="about" class="section wrap" aria-labelledby="about-title">
-      <h2 id="about-title" class="h-section reveal">About<span class="dot">.</span></h2>
+      <h2 id="about-title" class="h-section reveal" data-n="04">About<span class="dot">.</span></h2>
       <div class="about">
         <div class="about-text reveal">
           <p>I've been in business since 2020. Before any of this I made millions of Robux on Roblox, which taught me early that people pay for things they enjoy.</p>
@@ -222,6 +244,13 @@
         <figure class="reveal" style="--delay:120ms">
           <div class="shot shot--portrait">
             <img src="/assets/img/portrait.webp" srcset="/assets/img/portrait-480.webp 480w, /assets/img/portrait.webp 960w" sizes="(max-width: 860px) 90vw, 24rem" width="960" height="1200" alt="Ali Maruf taking a mirror selfie in glasses and a Brazil jersey" loading="lazy" decoding="async">
+          </div>
+          <div class="badge" aria-hidden="true">
+            <svg viewBox="0 0 120 120">
+              <defs><path id="badge-path" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs>
+              <g class="badge-spin"><text textLength="268"><textPath href="#badge-path">BUILD · SHIP · SELL · REPEAT ·</textPath></text></g>
+              <circle cx="60" cy="60" r="6"/>
+            </svg>
           </div>
         </figure>
       </div>
@@ -248,6 +277,15 @@
     </section>
 
   </main>
+
+  <nav class="rail" aria-label="Sections">
+    <a href="#top" data-rail="top" aria-label="Top"><span aria-hidden="true">Top</span></a>
+    <a href="#work" data-rail="work" aria-label="Work"><span aria-hidden="true">Work</span></a>
+    <a href="#clients" data-rail="clients" aria-label="Clients"><span aria-hidden="true">Clients</span></a>
+    <a href="#systems" data-rail="systems" aria-label="Systems"><span aria-hidden="true">Systems</span></a>
+    <a href="#about" data-rail="about" aria-label="About"><span aria-hidden="true">About</span></a>
+    <a href="#contact" data-rail="contact" aria-label="Contact"><span aria-hidden="true">Contact</span></a>
+  </nav>
 
   <footer class="footer">
     <div class="wrap">

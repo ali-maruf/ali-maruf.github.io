@@ -62,11 +62,14 @@
       tx = Math.min(cx + 28, window.innerWidth - w - 16);
       ty = Math.max(16, Math.min(cy - h / 2, window.innerHeight - h - 16));
     };
+    var apply = function () {
+      preview.style.setProperty("--x", x.toFixed(1) + "px");
+      preview.style.setProperty("--y", y.toFixed(1) + "px");
+    };
     var tick = function () {
       x += (tx - x) * (still ? 1 : 0.18);
       y += (ty - y) * (still ? 1 : 0.18);
-      preview.style.setProperty("--x", x.toFixed(1) + "px");
-      preview.style.setProperty("--y", y.toFixed(1) + "px");
+      apply();
       raf = on && (Math.abs(tx - x) > 0.3 || Math.abs(ty - y) > 0.3) ? requestAnimationFrame(tick) : 0;
     };
     var kick = function () { if (!raf) raf = requestAnimationFrame(tick); };
@@ -77,7 +80,7 @@
       shot.style.setProperty("--tint", src.style.getPropertyValue("--tint"));
       shot.setAttribute("data-label", src.getAttribute("data-label") || "");
       shot.innerHTML = src.innerHTML;
-      if (!on) { x = tx; y = ty; }
+      if (!on) { x = tx; y = ty; apply(); }
       on = true;
       preview.classList.add("is-on");
       kick();
@@ -296,6 +299,54 @@
       window.scrollTo({ top: 0, behavior: calmTop ? "auto" : "smooth" });
     });
   });
+
+  /* ---------- Headline: word-by-word rise ---------- */
+  var hw = document.querySelector("[data-words]");
+  if (hw) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !hw.firstChild || hw.firstChild.nodeType !== 3) {
+      hw.classList.add("is-in");
+    } else {
+      var hdot = hw.querySelector(".dot");
+      var parts = hw.firstChild.nodeValue.trim().split(/\s+/);
+      hw.setAttribute("aria-label", hw.textContent.trim());
+      hw.textContent = "";
+      parts.forEach(function (word, i) {
+        var outer = document.createElement("span");
+        outer.className = "w";
+        outer.setAttribute("aria-hidden", "true");
+        var inner = document.createElement("span");
+        inner.style.setProperty("--i", i);
+        inner.textContent = word;
+        if (i === parts.length - 1 && hdot) inner.appendChild(hdot);
+        outer.appendChild(inner);
+        hw.appendChild(outer);
+        hw.appendChild(document.createTextNode(" "));
+      });
+      hw.classList.add("words-ready");
+      var showWords = function () { hw.classList.add("is-in"); };
+      requestAnimationFrame(function () { requestAnimationFrame(showWords); });
+      setTimeout(showWords, 400);
+    }
+  }
+
+  /* ---------- Section rail (home) ---------- */
+  var railLinks = document.querySelectorAll("[data-rail]");
+  if (railLinks.length && "IntersectionObserver" in window) {
+    var railIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        railLinks.forEach(function (a) {
+          var on = a.getAttribute("data-rail") === en.target.id;
+          a.classList.toggle("is-active", on);
+          if (on) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
+        });
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    railLinks.forEach(function (a) {
+      var target = document.getElementById(a.getAttribute("data-rail"));
+      if (target) railIO.observe(target);
+    });
+  }
 
   /* ---------- Copy email ---------- */
   var copy = document.querySelector("[data-copy]");
